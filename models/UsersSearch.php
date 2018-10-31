@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\User;
+use app\models\Users;
 
 /**
- * UserSearch represents the model behind the search form of `app\models\User`.
+ * UsersSearch represents the model behind the search form of `app\models\Users`.
  */
-class UserSearch extends User
+class UsersSearch extends Users
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class UserSearch extends User
     {
         return [
             [['id'], 'integer'],
-            [['first_name', 'second_name', 'middle_name', 'phone', 'email'], 'safe'],
+            [['first_name', 'middle_name', 'last_name', 'phone', 'email'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find();
+        $query = Users::find();
 
         // add conditions that should always apply here
 
@@ -63,8 +63,8 @@ class UserSearch extends User
         ]);
 
         $query->andFilterWhere(['like', 'first_name', $this->first_name])
-            ->andFilterWhere(['like', 'second_name', $this->second_name])
             ->andFilterWhere(['like', 'middle_name', $this->middle_name])
+            ->andFilterWhere(['like', 'last_name', $this->last_name])
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'email', $this->email]);
 

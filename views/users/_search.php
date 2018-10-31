@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\UserSearch */
+/* @var $model app\models\UsersSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="user-search">
+<div class="users-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -19,9 +19,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'first_name') ?>
 
-    <?= $form->field($model, 'second_name') ?>
-
     <?= $form->field($model, 'middle_name') ?>
+
+    <?= $form->field($model, 'last_name') ?>
 
     <?= $form->field($model, 'phone') ?>
 

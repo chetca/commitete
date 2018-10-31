@@ -9,12 +9,12 @@ use Yii;
  *
  * @property int $id
  * @property string $first_name
- * @property string $second_name
  * @property string $middle_name
+ * @property string $last_name
  * @property string $phone
  * @property string $email
  */
-class User extends \yii\db\ActiveRecord
+class Users extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -30,8 +30,8 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'second_name', 'middle_name', 'phone', 'email'], 'required'],
-            [['first_name', 'second_name', 'middle_name', 'phone', 'email'], 'string', 'max' => 255],
+            [['first_name', 'middle_name', 'last_name', 'phone', 'email'], 'required'],
+            [['first_name', 'middle_name', 'last_name', 'phone', 'email'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,8 +43,8 @@ class User extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'first_name' => 'First Name',
-            'second_name' => 'Second Name',
             'middle_name' => 'Middle Name',
+            'last_name' => 'Last Name',
             'phone' => 'Phone',
             'email' => 'Email',
         ];

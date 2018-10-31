@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property int $time_id
  * @property string $date
- * @property int $status
+ * @property int $status_id
  * @property int $operator_id
  * @property int $user_id
  */
@@ -30,8 +30,8 @@ class Reception extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['time_id', 'date', 'status', 'operator_id', 'user_id'], 'required'],
-            [['time_id', 'status', 'operator_id', 'user_id'], 'integer'],
+            [['time_id', 'date', 'status_id', 'operator_id', 'user_id'], 'required'],
+            [['time_id', 'status_id', 'operator_id', 'user_id'], 'integer'],
             [['date'], 'safe'],
         ];
     }
@@ -43,11 +43,11 @@ class Reception extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'time_id' => 'Time ID',
+            'time_id' => 'Time',
             'date' => 'Date',
-            'status' => 'Status',
-            'operator_id' => 'Operator ID',
-            'user_id' => 'User ID',
+            'status_id' => 'Status',
+            'operator_id' => 'Operator',
+            'user_id' => 'User',
         ];
     }
 }

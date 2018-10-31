@@ -18,7 +18,7 @@ class ReceptionSearch extends Reception
     public function rules()
     {
         return [
-            [['id', 'time_id', 'status', 'operator_id', 'user_id'], 'integer'],
+            [['id', 'time_id', 'status_id', 'operator_id', 'user_id'], 'integer'],
             [['date'], 'safe'],
         ];
     }
@@ -62,7 +62,7 @@ class ReceptionSearch extends Reception
             'id' => $this->id,
             'time_id' => $this->time_id,
             'date' => $this->date,
-            'status' => $this->status,
+            'status_id' => $this->status_id,
             'operator_id' => $this->operator_id,
             'user_id' => $this->user_id,
         ]);

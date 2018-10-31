@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'time_id:datetime',
             'date',
-            'status',
+            'status_id',
             'operator_id',
             'user_id',
         ],
