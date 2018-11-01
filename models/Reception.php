@@ -43,11 +43,29 @@ class Reception extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'time_id' => 'Time',
-            'date' => 'Date',
-            'status_id' => 'Status',
-            'operator_id' => 'Operator',
-            'user_id' => 'User',
+            'time_id' => 'Время',
+            'date' => 'Дата',
+            'status_id' => 'Статус',
+            'operator_id' => 'Оператор',
+            'user_last_name' => 'Фамилия',
+            'user_first_name' => 'Имя',
+            'user_middle_name' => 'Очество',
         ];
+    }
+
+    public function getOperator() {
+        return $this->hasOne(Operators::className(), ['id' => 'operator_id']);
+    }
+
+    public function getStatus() {
+        return $this->hasOne(Status::className(), ['id' => 'status_id']);
+    }
+
+    public function getTime() {
+        return $this->hasOne(Time::className(), ['id' => 'time_id']);
+    }
+
+    public function getUser() {
+        return $this->hasOne(Users::className(), ['id' => 'user_id']);
     }
 }

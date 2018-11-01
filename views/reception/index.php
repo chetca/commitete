@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ReceptionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Receptions';
+$this->title = 'Список записей';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reception-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Reception', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить запись', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -24,13 +24,32 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'time_id',
+            
             'date:date',
-            'status_id',
-            'operator_id',
-            'user_id',
+            [
+                'attribute' => 'time_id',
+                'value' => 'time.time',
+            ],
+            [
+                'attribute' => 'status_id',
+                'value' => 'status.status',
+            ],
+            [
+                'attribute' => 'operator_id',
+                'value' => 'operator.operator',
+            ],
+            [
+                'attribute' => 'user_last_name',
+                'value' => 'user.last_name',
+            ],
+            [
+                'attribute' => 'user_first_name',
+                'value' => 'user.first_name',
+            ],
+            [
+                'attribute' => 'user_middle_name',
+                'value' => 'user.middle_name',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
