@@ -41,4 +41,13 @@ class Status extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
+
+    public static function getStatusList() {
+        $status = Status::find()
+            ->select(['t.id', 't.status'])
+            ->join('JOIN', 'status t', 'reception.status_id = t.id')
+            ->distinct(true)
+            ->all();
+        return ArrayHelper::map($status, 'id', 'name');
+    }
 }

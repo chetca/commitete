@@ -51,6 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'content'=>function($data) {
                     return $data->getStatusName();
                 },
+                //'filter' => Status::getStatusList(),
                 'filter' => array("1"=>"Время свободно","2"=>"Время занято"),
             ],
             /*
