@@ -47,9 +47,7 @@ class Reception extends \yii\db\ActiveRecord
             'date' => 'Дата',
             'status_id' => 'Статус',
             'operator_id' => 'Оператор',
-            'user_last_name' => 'Фамилия',
-            'user_first_name' => 'Имя',
-            'user_middle_name' => 'Очество',
+            'user_id' => 'Фамилия',
         ];
     }
 
@@ -67,5 +65,15 @@ class Reception extends \yii\db\ActiveRecord
 
     public function getUser() {
         return $this->hasOne(Users::className(), ['id' => 'user_id']);
+    }
+
+    public function getStatusName() {
+        $status = $this->status;
+        return $status ? $status->status : '';
+    }
+
+    public function getOperatorName() {
+        $operator = $this->operator;
+        return $operator ? $operator->operator : '';
     }
 }

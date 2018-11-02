@@ -22,36 +22,61 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered'
+        ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
-            'date:date',
+            //'date:date',
+            [
+                'attribute' => 'date',
+                'format' =>  ['date', 'dd.MM.Y'],
+                //'locale' => 'ru-RU',
+            ],
             [
                 'attribute' => 'time_id',
                 'value' => 'time.time',
+                'format' =>  ['time', 'HH:mm'],
             ],
+            /*
             [
                 'attribute' => 'status_id',
                 'value' => 'status.status',
             ],
+            */
+            [
+                'attribute'=>'status_id',
+                'format'=>'text', 
+                'content'=>function($data) {
+                    return $data->getStatusName();
+                },
+                'filter' => array("1"=>"Время свободно","2"=>"Время занято"),
+            ],
+            /*
             [
                 'attribute' => 'operator_id',
                 'value' => 'operator.operator',
             ],
+            */
             [
-                'attribute' => 'user_last_name',
+                'attribute'=>'operator_id',
+                'format'=>'text', 
+                'content'=>function($data) {
+                    return $data->getOperatorName();
+                },
+                'filter' => array("1"=>"Оператор 1","2"=>"Оператор 2"),
+            ],
+            [
+                'attribute' => 'user_id',
                 'value' => 'user.last_name',
             ],
-            [
-                'attribute' => 'user_first_name',
-                'value' => 'user.first_name',
-            ],
-            [
-                'attribute' => 'user_middle_name',
-                'value' => 'user.middle_name',
-            ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'header'=>'Действия', 
+                'headerOptions' => ['width' => '80'],
+                'template' => '{view} {update} {delete}{link}',
+            ],
         ],
     ]); ?>
 </div>
