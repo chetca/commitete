@@ -47,7 +47,7 @@ class Reception extends \yii\db\ActiveRecord
             'date' => 'Дата',
             'status_id' => 'Статус',
             'operator_id' => 'Оператор',
-            'user_id' => 'Фамилия',
+            'user_id' => 'Посетитель',
         ];
     }
 
@@ -75,5 +75,9 @@ class Reception extends \yii\db\ActiveRecord
     public function getOperatorName() {
         $operator = $this->operator;
         return $operator ? $operator->operator : '';
+    }
+
+    public function getFullName() {
+        return $this->user->last_name .' '. $this->user->first_name .' '. $this->user->middle_name;
     }
 }

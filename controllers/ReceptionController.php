@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Reception;
 use app\models\ReceptionSearch;
+use app\models\Time;
+use app\controllers\UsersController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -104,9 +106,26 @@ class ReceptionController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        //$this->findModel($id)->delete();
+        Yii::$app->db->createCommand(
+            'UPDATE `reception` SET `status_id` = :statusId, `user_id` = :userId WHERE `id` = :Id', 
+            ['statusId' => 1, ':userId' => '', ':Id' => $id])->execute();
+        //UsersController::actionDelete($id);
+        //Ебануть удаление пользователя из БД
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Select all time.
+     * @return mixed
+     */
+    public function actionTime()
+    {
+        //$model = Time::find()->all();
+        $model = new Reception();
+        return $this->render('time', [
+            'model' => $model,
+        ]);
     }
 
     /**

@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить запись', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Запланировать дни', ['time'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,6 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'tableOptions' => [
             'class' => 'table table-striped table-bordered'
         ],
+        'rowOptions' => function ($model) {
+            if ($model->status_id == '1') {
+                return ['class' => 'success'];
+            } else {
+                return ['class' => 'danger'];
+            }
+        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
@@ -66,17 +73,42 @@ $this->params['breadcrumbs'][] = $this->title;
                 'content'=>function($data) {
                     return $data->getOperatorName();
                 },
-                'filter' => array("1"=>"Оператор 1","2"=>"Оператор 2"),
+                'filter' => array("1"=>"Оператор 1","2"=>"Оператор 2", "3"=>"Оператор 3"),
             ],
             [
                 'attribute' => 'user_id',
-                'value' => 'user.last_name',
+                'value' => function ($model) {
+                    if(isset($model->user)) {
+                        return $model->user->last_name .' '. $model->user->first_name .' '. $model->user->middle_name;
+                    }
+                },
             ],
 
             ['class' => 'yii\grid\ActionColumn',
-                'header'=>'Действия', 
-                'headerOptions' => ['width' => '80'],
-                'template' => '{view} {update} {delete}{link}',
+                'template' => '{link}  {delete}',
+                'buttons' => [
+                    'link' => function ($url,$model) {
+                        if($model->status_id == 1) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-pencil"></span>',
+                                '/users/create?id='.$model->id,
+                                [
+                                    'title' => Yii::t('yii', 'Создать запись'),
+                                ]
+                            );
+                        }
+                    },
+                    'delete' => function ($url, $model) {
+                        if($model->status_id == 2) {
+                            return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url,[
+                                'title' => Yii::t('yii', 'Удалить'),
+                                'data-confirm' => 'Вы уверены что ходите удалить запись?',
+                                'data-method' => 'post',
+                                'data-pjax' => '0',
+                            ]);
+                        }
+                    },
+                ],
             ],
         ],
     ]); ?>

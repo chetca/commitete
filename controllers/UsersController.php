@@ -65,9 +65,15 @@ class UsersController extends Controller
     public function actionCreate()
     {
         $model = new Users();
-
+        $request = Yii::$app->request;
+        $id = $request->get('id');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            //Запилить проверку на существование id в get
+            Yii::$app->db->createCommand(
+                'UPDATE `reception` SET `status_id` = :statusId, `user_id` = :userId WHERE `id` = :Id', 
+                ['statusId' => 2, ':userId' => $model->id, ':Id' => $id])->execute();
+            //return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect('/reception');
         }
 
         return $this->render('create', [

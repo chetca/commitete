@@ -6,34 +6,38 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Reception */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Receptions', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Запись';
+$this->params['breadcrumbs'][] = ['label' => 'Список записей', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::$app->formatter->asTime($model->time->time, 'hh:mm'), 'url' => ['view', 'id' => $model->time_id]];
 ?>
 <div class="reception-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'time_id',
-            'date',
-            'status_id',
-            'operator_id',
-            'user_id',
+            [
+                'attribute' => 'date',
+                'format' =>  ['date', 'dd.MM.Y'],
+            ],
+            [
+                'attribute' => 'time_id',
+                'format' =>  ['time', 'HH:mm'],
+                'value' => function ($model) {
+                    return $model->time->time;
+                },
+            ],
+            [
+                'attribute' => 'user_id',
+                'value' => function ($model) {
+                    return $model->user->last_name .' '. $model->user->first_name .' '. $model->user->middle_name;
+                },
+            ],
         ],
     ]) ?>
 
