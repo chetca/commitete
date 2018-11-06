@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\ActiveField;
-use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 
@@ -12,16 +11,34 @@ $this->params['breadcrumbs'][] = ['label' => 'Список записей', 'url
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reception-time">
+	<div class="container">
+	
+    	<h1><?= Html::encode($this->title) ?></h1>
+	
+    	<?php $form = ActiveForm::begin(); ?>
+    	<div class="col-md-4">
+    		<?= $form->field($model, 'datePlan')->input('date'); ?>
+    	</div>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'date')->widget(\yii\widgets\MaskedInput::className(), [
-    'mask' => '99.99.9999',]);?>
-    <?= $form->field($model, 'date')->input('date'); ?>
-
-    <?= Html::submitButton('Запланировать', ['class' => 'btn btn-primary']); ?>
+    	<div class="col-md-4">
+    		<?= $form->field($model, 'operatorPlan')->dropDownList([
+    			'1' => 'Один',
+    			'2' => 'Два', 
+    			'3' => 'Три'
+    		], 
+    		[
+    			'options' => [
+    				'2' => ['Selected' => true]
+    			]
+    		]
+    	); ?>
+    	</div>
+    </div> 	
+	<div class="container">
+		<?= Html::submitButton('Запланировать', ['class' => 'btn btn-primary']); ?>
+	</div>
 
 	<?php ActiveForm::end(); ?>
+
 </div>
+

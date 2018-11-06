@@ -41,4 +41,8 @@ class Time extends \yii\db\ActiveRecord
             'time' => 'Time',
         ];
     }
+
+    public function getTimeCount() {
+        return Time::find()->count();
+    }
 }

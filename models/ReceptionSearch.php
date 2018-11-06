@@ -48,7 +48,7 @@ class ReceptionSearch extends Reception
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 32,
+                'pageSize' => 28,
             ],
         ]);
 

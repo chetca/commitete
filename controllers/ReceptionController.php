@@ -10,6 +10,7 @@ use app\controllers\UsersController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Request;
 
 /**
  * ReceptionController implements the CRUD actions for Reception model.
@@ -121,11 +122,16 @@ class ReceptionController extends Controller
      */
     public function actionTime()
     {
-        //$model = Time::find()->all();
         $model = new Reception();
-        return $this->render('time', [
-            'model' => $model,
-        ]);
+        $time = new Time();
+        $countTime = Time::find()->count();
+        if ($model->load(Yii::$app->request->post())) {
+            $operatorPlan = Yii::$app->request->post('Reception')['operatorPlan'];
+            $datePlan = Yii::$app->request->post('Reception')['datePlan'];
+            $model->saveTime($operatorPlan, $datePlan, $countTime);
+            return $this->redirect(['index']);
+        }     
+        return $this->render('time', ['model' => $model]);
     }
 
     /**
