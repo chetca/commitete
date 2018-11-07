@@ -8,6 +8,10 @@ use app\models\UsersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
+use app\models\Reception;
+use app\models\Time;
 
 /**
  * UsersController implements the CRUD actions for Users model.
@@ -52,6 +56,11 @@ class UsersController extends Controller
      */
     public function actionView($id)
     {
+        $reception = new Reception;
+        $time = new Time;
+        //$userData = Reception::find()->where(['user_id' => $id]);
+        //var_dump($userData);
+        //$userTime = Time::find()->where(['id' => $userData->time_id]);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -67,18 +76,17 @@ class UsersController extends Controller
         $model = new Users();
         $request = Yii::$app->request;
         $id = $request->get('id');
+        $now = strtotime(date("d.m.Y H:i:s", time()));
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //Запилить проверку на существование id в get
             Yii::$app->db->createCommand(
-                'UPDATE `reception` SET `status_id` = :statusId, `user_id` = :userId WHERE `id` = :Id', 
-                ['statusId' => 2, ':userId' => $model->id, ':Id' => $id])->execute();
+                'UPDATE `reception` SET `status_id` = :statusId, `user_id` = :userId, `record` = :Now WHERE `id` = :Id', 
+                ['statusId' => 2, ':userId' => $model->id, ':Id' => $id, ':Now' => $now])->execute();
             //return $this->redirect(['view', 'id' => $model->id]);
             return $this->redirect('/reception');
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return $this->render('create', ['model' => $model]);
     }
 
     /**

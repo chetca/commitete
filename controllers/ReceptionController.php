@@ -109,8 +109,8 @@ class ReceptionController extends Controller
     {
         //$this->findModel($id)->delete();
         Yii::$app->db->createCommand(
-            'UPDATE `reception` SET `status_id` = :statusId, `user_id` = :userId WHERE `id` = :Id', 
-            ['statusId' => 1, ':userId' => '', ':Id' => $id])->execute();
+            'UPDATE `reception` SET `status_id` = :statusId, `user_id` = :userId, `record` = :Rec WHERE `id` = :Id', 
+            ['statusId' => 1, ':userId' => '', ':Id' => $id, ':Rec' => null])->execute();
         //UsersController::actionDelete($id);
         //Ебануть удаление пользователя из БД
         return $this->redirect(['index']);
@@ -123,7 +123,6 @@ class ReceptionController extends Controller
     public function actionTime()
     {
         $model = new Reception();
-        $time = new Time();
         $countTime = Time::find()->count();
         if ($model->load(Yii::$app->request->post())) {
             $operatorPlan = Yii::$app->request->post('Reception')['operatorPlan'];
@@ -132,6 +131,23 @@ class ReceptionController extends Controller
             return $this->redirect(['index']);
         }     
         return $this->render('time', ['model' => $model]);
+    }
+
+    /**
+     * Remove all time.
+     * @return mixed
+     */
+    public function actionRemove()
+    {
+        $model = new Reception();
+        $countTime = Time::find()->count();
+        if ($model->load(Yii::$app->request->post())) {
+            $operatorPlan = Yii::$app->request->post('Reception')['operatorPlan'];
+            $datePlan = Yii::$app->request->post('Reception')['datePlan'];
+            $model->removeTime($operatorPlan, $datePlan);
+            return $this->redirect(['index']);
+        }     
+        return $this->render('remove', ['model' => $model]);
     }
 
     /**

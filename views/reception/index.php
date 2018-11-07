@@ -16,7 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Запланировать дни', ['time'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить записи', ['time'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Удалить записи', ['remove'], ['class' => 'btn btn-danger']) ?>
     </p>
 
     <?= GridView::widget([
@@ -35,23 +36,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
-            //'date:date',
+            [
+                'attribute' => 'id',
+                'headerOptions' => ['width' => '80'],
+            ],
             [
                 'attribute' => 'date',
                 'format' =>  ['date', 'dd.MM.Y'],
-                //'locale' => 'ru-RU',
+                'headerOptions' => ['width' => '80'],
             ],
             [
                 'attribute' => 'time_id',
                 'value' => 'time.time',
                 'format' =>  ['time', 'HH:mm'],
+                'headerOptions' => ['width' => '80'],
             ],
-            /*
-            [
-                'attribute' => 'status_id',
-                'value' => 'status.status',
-            ],
-            */
             [
                 'attribute'=>'status_id',
                 'format'=>'text', 
@@ -60,13 +59,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 //'filter' => Status::getStatusList(),
                 'filter' => array("1"=>"Время свободно","2"=>"Время занято"),
+                'headerOptions' => ['width' => '150'],
             ],
-            /*
-            [
-                'attribute' => 'operator_id',
-                'value' => 'operator.operator',
-            ],
-            */
             [
                 'attribute'=>'operator_id',
                 'format'=>'text', 
@@ -74,6 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->getOperatorName();
                 },
                 'filter' => array("1"=>"Оператор 1","2"=>"Оператор 2", "3"=>"Оператор 3"),
+                'headerOptions' => ['width' => '120'],
             ],
             [
                 'attribute' => 'user_id',
@@ -82,6 +77,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->user->last_name .' '. $model->user->first_name .' '. $model->user->middle_name;
                     }
                 },
+            ],
+            [
+                'attribute' => 'record',
+                'format' =>  [
+                    'time', 'dd.MM.Y hh:mm'
+                ],
+                'value' => function($model) {
+                    Yii::$app->formatter->timeZone = 'Asia/Irkutsk';
+                    return $model->record;
+                }
             ],
 
             ['class' => 'yii\grid\ActionColumn',
@@ -102,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         if($model->status_id == 2) {
                             return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url,[
                                 'title' => Yii::t('yii', 'Удалить'),
-                                'data-confirm' => 'Вы уверены что ходите удалить запись?',
+                                'data-confirm' => 'Вы уверены что хотите удалить запись?',
                                 'data-method' => 'post',
                                 'data-pjax' => '0',
                             ]);

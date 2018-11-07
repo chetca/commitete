@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11dc19ae1bd8fd0737fec254fc20f7de",
+    "content-hash": "636021d5023849f543122f27a93e24e6",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -74,7 +74,7 @@
             "version": "v1.3.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bestiejs/punycode.js.git",
+                "url": "git@github.com:bestiejs/punycode.js.git",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "dist": {
@@ -213,6 +213,60 @@
                 "html"
             ],
             "time": "2018-02-23T01:58:20+00:00"
+        },
+        {
+            "name": "lav45/yii2-behaviors",
+            "version": "0.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lav45/yii2-behaviors.git",
+                "reference": "913900350237b9cf1b8bdfd82c7837835f600705"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lav45/yii2-behaviors/zipball/913900350237b9cf1b8bdfd82c7837835f600705",
+                "reference": "913900350237b9cf1b8bdfd82c7837835f600705",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0",
+                "yiisoft/yii2": "2.0.*"
+            },
+            "require-dev": {
+                "ext-sqlite3": "*",
+                "phpunit/phpunit": ">=4",
+                "roave/security-advisories": "dev-master"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "lav45\\behaviors\\": "src",
+                    "lav45\\behaviors\\tests\\": "tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexey Loban",
+                    "email": "lav451@gmail.com"
+                }
+            ],
+            "description": "This is a set of Yii2 behaviors extensions",
+            "homepage": "https://github.com/lav45/yii2-behaviors",
+            "keywords": [
+                "Behavior",
+                "extension",
+                "yii2"
+            ],
+            "time": "2018-10-05T20:07:17+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

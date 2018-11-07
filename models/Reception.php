@@ -14,6 +14,7 @@ use Yii;
  * @property int $operator_id
  * @property int $user_id
  * @property int $operatorPlan
+ * @property string $record
  */
 class Reception extends \yii\db\ActiveRecord
 {
@@ -36,7 +37,7 @@ class Reception extends \yii\db\ActiveRecord
         return [
             [['time_id', 'date', 'status_id', 'operator_id', 'user_id'], 'required'],
             [['time_id', 'status_id', 'operator_id', 'user_id', 'operatorPlan'], 'integer'],
-            [['date'], 'safe'],
+            [['date', 'record'], 'safe'],
         ];
     }
 
@@ -46,12 +47,13 @@ class Reception extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'Номер записи',
             'time_id' => 'Время',
             'date' => 'Дата',
             'status_id' => 'Статус',
             'operator_id' => 'Оператор',
             'user_id' => 'Посетитель',
+            'record' => 'Время обращения',
             'datePlan' => 'Планируемая дата',
             'operatorPlan' => 'Количество операторов',
         ];
@@ -99,6 +101,16 @@ class Reception extends \yii\db\ActiveRecord
         ->createCommand()
         ->batchInsert('reception', ['time_id', 'date', 'status_id', 'operator_id', 'user_id'], $data)
         ->execute();
+        return true;
+    }
+
+    public function removeTime($operatorPlan, $datePlan) 
+    {
+        if($operatorPlan >= 1) {
+            Reception::deleteAll(['date' => $datePlan, 'operator_id' => $operatorPlan]);
+        } else {
+            Reception::deleteAll(['date' => $datePlan]);
+        }        
         return true;
     }
 }
