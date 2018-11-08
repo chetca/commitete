@@ -56,14 +56,16 @@ class UsersController extends Controller
      */
     public function actionView($id)
     {
-        $reception = new Reception;
-        $time = new Time;
-        //$userData = Reception::find()->where(['user_id' => $id]);
-        //var_dump($userData);
-        //$userTime = Time::find()->where(['id' => $userData->time_id]);
+        $userData = Reception::find()->where(['user_id' => $id])->all();
+        //$userTime = Time::find()->where(['id' => $userData->id])->all();
+        //var_dump($userTime);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            //'reception' => $userData,
+            //'time' => $userTime,
         ]);
+
     }
 
     /**

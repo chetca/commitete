@@ -55,8 +55,11 @@ $config = [
             'rules' => [
             ],
         ],
-        
+        'gridview' => [
+            'class' => 'kartik\grid\Module',
+        ],        
     ],
+    'modules' => ['gridview' => ['class' => 'kartik\grid\Module']], 
     'params' => $params,
 ];
 

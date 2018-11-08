@@ -39,8 +39,9 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Посетители', 'url' => ['/users']],
+            //['label' => 'Посетители', 'url' => ['/users']],
             ['label' => 'Список записей', 'url' => ['/reception']],
+            /*
             Yii::$app->user->isGuest ? (
                 ['label' => 'Войти', 'url' => ['/site/login']]
             ) : (
@@ -53,6 +54,7 @@ AppAsset::register($this);
                 . Html::endForm()
                 . '</li>'
             )
+            */
         ],
     ]);
     NavBar::end();

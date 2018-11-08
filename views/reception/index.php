@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\export\ExportMenu;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ReceptionSearch */
@@ -9,31 +10,8 @@ use yii\grid\GridView;
 
 $this->title = 'Список записей';
 $this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="reception-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Добавить записи', ['time'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Удалить записи', ['remove'], ['class' => 'btn btn-danger']) ?>
-    </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'tableOptions' => [
-            'class' => 'table table-striped table-bordered'
-        ],
-        'rowOptions' => function ($model) {
-            if ($model->status_id == '1') {
-                return ['class' => 'success'];
-            } else {
-                return ['class' => 'danger'];
-            }
-        },
-        'columns' => [
+        $gridColumns = [
             ['class' => 'yii\grid\SerialColumn'],
             
             [
@@ -57,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'content'=>function($data) {
                     return $data->getStatusName();
                 },
-                //'filter' => Status::getStatusList(),
                 'filter' => array("1"=>"Время свободно","2"=>"Время занято"),
                 'headerOptions' => ['width' => '150'],
             ],
@@ -114,7 +91,41 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                     },
                 ],
-            ],
+            ]
+        ];
+?>
+<div class="reception-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?= Html::a('Добавить записи', ['time'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Удалить записи', ['remove'], ['class' => 'btn btn-danger']) ?>
+    </p>
+
+    <?= ExportMenu::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => $gridColumns,
+        'dropdownOptions' => [
+            'label' => 'Выгрузка в файл',
+            'class' => 'btn btn-secondary'
+        ]
+    ]); ?>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered'
         ],
+        'rowOptions' => function ($model) {
+            if ($model->status_id == '1') {
+                return ['class' => 'success'];
+            } else {
+                return ['class' => 'danger'];
+            }
+        },
+        'columns' => $gridColumns,
     ]); ?>
 </div>

@@ -18,8 +18,8 @@ class ReceptionSearch extends Reception
     public function rules()
     {
         return [
-            [['id', 'time_id', 'status_id', 'operator_id', 'user_id', 'record'], 'integer'],
-            [['date'], 'safe'],
+            [['id', 'time_id', 'status_id', 'operator_id', 'user_id'], 'integer'],
+            [['date', 'record'], 'safe'],
         ];
     }
 
