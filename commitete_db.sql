@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 07 2018 г., 07:39
+-- Время создания: Ноя 08 2018 г., 06:39
 -- Версия сервера: 10.1.36-MariaDB
 -- Версия PHP: 7.2.11
 
@@ -318,7 +318,7 @@ ALTER TABLE `operators`
 -- AUTO_INCREMENT для таблицы `reception`
 --
 ALTER TABLE `reception`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=477;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `status`
@@ -336,7 +336,7 @@ ALTER TABLE `time`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
