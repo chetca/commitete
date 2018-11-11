@@ -107,12 +107,8 @@ class ReceptionController extends Controller
      */
     public function actionDelete($id)
     {
-        //$this->findModel($id)->delete();
-        Yii::$app->db->createCommand(
-            'UPDATE `reception` SET `status_id` = :statusId, `user_id` = :userId, `record` = :Rec WHERE `id` = :Id', 
-            ['statusId' => 1, ':userId' => '', ':Id' => $id, ':Rec' => null])->execute();
-        //UsersController::actionDelete($id);
-        //Ебануть удаление пользователя из БД
+        $model = new Reception();
+        $model->deleteUser($id);
         return $this->redirect(['index']);
     }
 
@@ -127,10 +123,15 @@ class ReceptionController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $operatorPlan = Yii::$app->request->post('Reception')['operatorPlan'];
             $datePlan = Yii::$app->request->post('Reception')['datePlan'];
-            $model->saveTime($operatorPlan, $datePlan, $countTime);
-            return $this->redirect(['index']);
-        }     
-        return $this->render('time', ['model' => $model]);
+            if($model->saveTime($operatorPlan, $datePlan, $countTime)) {
+                return $this->redirect(['index']);
+            } else {
+                \Yii::$app->session->addFlash('danger', 'Ошибка ввода даты');
+                return $this->render('time', ['model' => $model]);
+            }
+        } else {
+            return $this->render('time', ['model' => $model]);
+        }
     }
 
     /**

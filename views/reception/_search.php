@@ -15,21 +15,21 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?php //echo $form->field($model, 'id') ?>
 
-    <?= $form->field($model, $model->time->time) ?>
+    <?php //echo $form->field($model, 'timeReal') ?>
 
-    <?= $form->field($model, 'date') ?>
+    <?php echo $form->field($model, 'date')->input('date'); ?>
 
-    <?= $form->field($model, 'status_id') ?>
+    <?php //echo $form->field($model, 'status_id') ?>
 
-    <?= $form->field($model, 'operator_id') ?>
+    <?php //echo $form->field($model, 'operator_id') ?>
 
-    <?php // echo $form->field($model, 'user_id') ?>
+    <?php //echo $form->field($model, 'userNameReal') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Поиск', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Сброс', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

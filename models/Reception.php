@@ -20,6 +20,7 @@ class Reception extends \yii\db\ActiveRecord
 {
     public $datePlan;
     public $operatorPlan;
+    public $userNameReal;
 
     /**
      * @inheritdoc
@@ -37,7 +38,7 @@ class Reception extends \yii\db\ActiveRecord
         return [
             [['time_id', 'date', 'status_id', 'operator_id', 'user_id'], 'required'],
             [['time_id', 'status_id', 'operator_id', 'user_id', 'operatorPlan'], 'integer'],
-            [['date', 'record'], 'safe'],
+            [['date', 'record', 'userNameReal'], 'safe'],
         ];
     }
 
@@ -56,6 +57,8 @@ class Reception extends \yii\db\ActiveRecord
             'record' => 'Время обращения',
             'datePlan' => 'Планируемая дата',
             'operatorPlan' => 'Количество операторов',
+            'timeReal' => 'Время',
+            'userNameReal' => 'ФИО',
         ];
     }
 
@@ -91,6 +94,20 @@ class Reception extends \yii\db\ActiveRecord
 
     public function saveTime($operatorPlan, $dataPlan, $countTime)
     {
+        $currentDate = date('Y-m-d');
+        $busyDate = (new \yii\db\Query())
+            ->select('date')
+            ->from('reception')
+            ->distinct()
+            ->all();
+        foreach ($busyDate as $key) {
+            if($key['date'] == $dataPlan) {
+                return false;
+            }
+        }
+        if($dataPlan <= $currentDate) {
+            return false;
+        }
         $data = array();
         for($i = 1; $i <= $operatorPlan; $i++) {
             for($j = 1; $j <= $countTime; $j++) {
@@ -111,6 +128,19 @@ class Reception extends \yii\db\ActiveRecord
         } else {
             Reception::deleteAll(['date' => $datePlan]);
         }        
+        return true;
+    }
+
+    public function deleteUser($receptionId) 
+    {
+        $userIdDel = Reception::findOne($receptionId);
+        $userWhoWillDie = Users::findOne($userIdDel->user_id);
+        Reception::updateAll([
+            'status_id' => 1, 
+            'user_id' => '', 
+            'record' => null
+        ],['id' => $receptionId]);
+        $userWhoWillDie->delete(); //bye
         return true;
     }
 }

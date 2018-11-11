@@ -6,12 +6,15 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Reception;
+use app\models\Users;
 
 /**
  * ReceptionSearch represents the model behind the search form of `app\models\Reception`.
  */
 class ReceptionSearch extends Reception
 {
+    public $timeReal;
+    public $userNameReal;
     /**
      * @inheritdoc
      */
@@ -19,7 +22,7 @@ class ReceptionSearch extends Reception
     {
         return [
             [['id', 'time_id', 'status_id', 'operator_id', 'user_id'], 'integer'],
-            [['date', 'record'], 'safe'],
+            [['date', 'record', 'timeReal', 'userNameReal'], 'safe'],
         ];
     }
 
@@ -42,6 +45,8 @@ class ReceptionSearch extends Reception
     public function search($params)
     {
         $query = Reception::find();
+        $query->joinWith(['user']);
+        $query->joinWith(['time']);
 
         // add conditions that should always apply here
 
@@ -51,6 +56,16 @@ class ReceptionSearch extends Reception
                 'pageSize' => 28,
             ],
         ]);
+
+        $dataProvider->sort->attributes['userNameReal'] = [
+            'asc' => [Users::tableName().'.last_name' => SORT_ASC],
+            'desc' => [Users::tableName().'.last_name' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['timeReal'] = [
+            'asc' => [Time::tableName().'.time' => SORT_ASC],
+            'desc' => [Time::tableName().'.time' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -68,8 +83,15 @@ class ReceptionSearch extends Reception
             'status_id' => $this->status_id,
             'operator_id' => $this->operator_id,
             'user_id' => $this->user_id,
+        ])
+        ->andFilterWhere(['like', 
+            Time::tableName().'.time', 
+            $this->timeReal,
+        ])
+        ->andFilterWhere(['like', 
+            Users::tableName().'.last_name', 
+            $this->userNameReal,
         ]);
-
         return $dataProvider;
     }
 }
