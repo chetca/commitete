@@ -78,16 +78,18 @@ class UsersController extends Controller
         $model = new Users();
         $request = Yii::$app->request;
         $id = $request->get('id');
-        $now = strtotime(date("d.m.Y H:i:s", time()));
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //Запилить проверку на существование id в get
-            Yii::$app->db->createCommand(
-                'UPDATE `reception` SET `status_id` = :statusId, `user_id` = :userId, `record` = :Now WHERE `id` = :Id', 
-                ['statusId' => 2, ':userId' => $model->id, ':Id' => $id, ':Now' => $now])->execute();
-            //return $this->redirect(['view', 'id' => $model->id]);
+        $arrayUser = $request->post('Users');
+        if ($model->load(Yii::$app->request->post()) && isset($id)) {
+            $checkUser = $model->checkUser($arrayUser);
+            if($checkUser) {
+                $idUser = $checkUser;
+            } else {
+                $model->save();
+                $idUser = $model->id;
+            }
+            Reception::addUser($id, $idUser);
             return $this->redirect('/reception');
         }
-
         return $this->render('create', ['model' => $model]);
     }
 

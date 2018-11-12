@@ -15,6 +15,9 @@ class ReceptionSearch extends Reception
 {
     public $timeReal;
     public $userNameReal;
+    public $userPhone;
+    public $userEmail;
+
     /**
      * @inheritdoc
      */
@@ -22,7 +25,7 @@ class ReceptionSearch extends Reception
     {
         return [
             [['id', 'time_id', 'status_id', 'operator_id', 'user_id'], 'integer'],
-            [['date', 'record', 'timeReal', 'userNameReal'], 'safe'],
+            [['date', 'record', 'timeReal', 'userNameReal', 'userPhone', 'userEmail'], 'safe'],
         ];
     }
 
@@ -56,6 +59,16 @@ class ReceptionSearch extends Reception
                 'pageSize' => 28,
             ],
         ]);
+
+        $dataProvider->sort->attributes['userPhone'] = [
+            'asc' => [Users::tableName().'.phone' => SORT_ASC],
+            'desc' => [Users::tableName().'.phone' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['userEmail'] = [
+            'asc' => [Users::tableName().'.email' => SORT_ASC],
+            'desc' => [Users::tableName().'.email' => SORT_DESC],
+        ];
 
         $dataProvider->sort->attributes['userNameReal'] = [
             'asc' => [Users::tableName().'.last_name' => SORT_ASC],
@@ -91,6 +104,14 @@ class ReceptionSearch extends Reception
         ->andFilterWhere(['like', 
             Users::tableName().'.last_name', 
             $this->userNameReal,
+        ])
+        ->andFilterWhere(['like', 
+            Users::tableName().'.phone', 
+            $this->userPhone,
+        ])
+        ->andFilterWhere(['like', 
+            Users::tableName().'.email', 
+            $this->userEmail,
         ]);
         return $dataProvider;
     }

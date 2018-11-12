@@ -49,4 +49,19 @@ class Users extends \yii\db\ActiveRecord
             'email' => 'Электронная почта',
         ];
     }
+
+    public function checkUser($arrayUser)
+    {
+        $find = Users::findOne([
+            'first_name' => $arrayUser['first_name'],
+            'middle_name' => $arrayUser['middle_name'],
+            'last_name' => $arrayUser['last_name'],
+            'phone' => $arrayUser['phone'],
+        ]);
+        if($find) {
+            return $find->id;
+        } else {
+            return false;
+        }
+    }
 }

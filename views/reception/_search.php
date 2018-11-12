@@ -28,8 +28,7 @@ use yii\widgets\ActiveForm;
     <?php //echo $form->field($model, 'userNameReal') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Поиск', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Сброс', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Открыть', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

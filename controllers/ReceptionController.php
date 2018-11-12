@@ -40,12 +40,37 @@ class ReceptionController extends Controller
     {
         $searchModel = new ReceptionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(!Yii::$app->request->get()) {
+            return $this->redirect(['index', 'ReceptionSearch[date]' => '2018-11-13']);
+        }
+        //ReceptionSearch[date]=2018-11-13
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    /*
+    public function actionIndex()
+    {
+        $queryParams = Yii::$app->request->queryParams;
+        if (isset($queryParams['date'])) {
+            $queryParams['ReceptionSearch']['date'] = '2018-11-13';
+        }
+        var_dump($queryParams);
+
+        $searchModel = new ReceptionSearch();
+        $dataProvider = $searchModel->search($queryParams);
+        //ReceptionSearch[date]=2018-11-13
+        
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+        
+    }
+    */
 
     /**
      * Displays a single Reception model.

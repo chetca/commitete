@@ -15,12 +15,15 @@ $this->params['breadcrumbs'][] = ['label' => Yii::$app->formatter->asTime($model
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php //echo Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            [
+                'attribute' => 'id',
+            ],
             [
                 'attribute' => 'date',
                 'format' =>  ['date', 'dd.MM.Y'],
@@ -36,6 +39,18 @@ $this->params['breadcrumbs'][] = ['label' => Yii::$app->formatter->asTime($model
                 'attribute' => 'user_id',
                 'value' => function ($model) {
                     return $model->user->last_name .' '. $model->user->first_name .' '. $model->user->middle_name;
+                },
+            ],
+            [
+                'attribute' => 'userPhone',
+                'value' => function ($model) {
+                    return $model->user->phone;
+                },
+            ],
+            [
+                'attribute' => 'userEmail',
+                'value' => function ($model) {
+                    return $model->user->email;
                 },
             ],
         ],

@@ -58,7 +58,9 @@ class Reception extends \yii\db\ActiveRecord
             'datePlan' => 'Планируемая дата',
             'operatorPlan' => 'Количество операторов',
             'timeReal' => 'Время',
-            'userNameReal' => 'ФИО',
+            'userNameReal' => 'Фамилия',
+            'userPhone' => 'Телефон',
+            'userEmail' => 'Электронная почта',
         ];
     }
 
@@ -90,6 +92,15 @@ class Reception extends \yii\db\ActiveRecord
 
     public function getFullName() {
         return $this->user->last_name .' '. $this->user->first_name .' '. $this->user->middle_name;
+    }
+
+    public function getBusyDate() {
+        $busyDate = (new \yii\db\Query())
+            ->select('date')
+            ->from('reception')
+            ->distinct()
+            ->all();
+        return $busyDate;
     }
 
     public function saveTime($operatorPlan, $dataPlan, $countTime)
@@ -131,6 +142,18 @@ class Reception extends \yii\db\ActiveRecord
         return true;
     }
 
+    public function addUser($receptionId, $userId) 
+    {
+        $now = strtotime(date("d.m.Y H:i:s", time()));
+        $nowReception = Reception::findOne($receptionId);
+        Reception::updateAll([
+            'status_id' => 2, 
+            'user_id' => $userId, 
+            'record' => $now
+        ],['id' => $receptionId]);
+        return true;
+    }
+
     public function deleteUser($receptionId) 
     {
         $userIdDel = Reception::findOne($receptionId);
@@ -140,7 +163,20 @@ class Reception extends \yii\db\ActiveRecord
             'user_id' => '', 
             'record' => null
         ],['id' => $receptionId]);
-        $userWhoWillDie->delete(); //bye
+        $isReception = Reception::findOne(['user_id' => $userWhoWillDie->id]);
+        if(!$isReception) {
+            $userWhoWillDie->delete(); //bye
+        }        
         return true;
+    }
+
+    public function getNextDate() {
+        $currentDate = date('Y-m-d');
+        $busyDate = getBusyDate();
+        foreach ($busyDate as $day) {
+            if($day['date'] > $currentDate) {
+                
+            }
+        }
     }
 }

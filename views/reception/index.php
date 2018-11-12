@@ -11,10 +11,8 @@ use kartik\grid\GridView;
 $this->title = 'Список записей';
 $this->params['breadcrumbs'][] = $this->title;
 
-//$model->date = date("Y-m-d");
-
 $gridColumns = [
-    ['class' => 'yii\grid\SerialColumn'],
+    //['class' => 'yii\grid\SerialColumn'],
     
     [
         'attribute' => 'id',
@@ -67,10 +65,21 @@ $gridColumns = [
         'attribute' => 'userNameReal',
         'value' => function ($model) {
             if(isset($model->user)) {
-                return $model->user->last_name .' '. $model->user->first_name .' '. $model->user->middle_name.' '. $model->user->phone;
+                return $model->user->last_name;
             }
         },
     ],
+    /*
+    [
+        'attribute' => 'userPhone',
+        'value' => function ($model) {
+            if(isset($model->user)) {
+                return $model->user->phone;
+            }
+        },
+        'headerOptions' => ['width' => '150'],
+    ],
+    */
     [
         'attribute' => 'record',
         'format' =>  [
@@ -79,11 +88,12 @@ $gridColumns = [
         'value' => function($model) {
             Yii::$app->formatter->timeZone = 'Asia/Irkutsk';
             return $model->record;
-        }
+        },
+        'headerOptions' => ['width' => '150'],
     ],
 
     ['class' => 'yii\grid\ActionColumn',
-        'template' => '{link}  {delete}',
+        'template' => '{view}  {link}  {delete}',
         'buttons' => [
             'link' => function ($url,$model) {
                 if($model->status_id == 1) {
@@ -103,6 +113,13 @@ $gridColumns = [
                         'data-confirm' => 'Вы уверены что хотите удалить запись?',
                         'data-method' => 'post',
                         'data-pjax' => '0',
+                    ]);
+                }
+            },
+            'view' => function ($url, $model) {
+                if($model->status_id == 2) {
+                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url,[
+                        'title' => Yii::t('yii', 'Просмотр'),
                     ]);
                 }
             },
@@ -128,6 +145,8 @@ $gridColumns = [
         ]
     ]); ?>
 
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -144,6 +163,3 @@ $gridColumns = [
         'columns' => $gridColumns,
     ]); ?>
 </div>
-
-
-<?php echo $this->render('_search', ['model' => $searchModel]); ?>
