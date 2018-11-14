@@ -170,13 +170,47 @@ class Reception extends \yii\db\ActiveRecord
         return true;
     }
 
+    public function sendMail($receptionId, $arrayUser) {
+        $receptionData = Reception::findOne($receptionId);
+        $sendto = $arrayUser['email'];
+
+        $receptionNumber = $receptionId;
+        $receptionDate = date("d.m.Y", strtotime($receptionData['date']));
+        $receptionTime = Time::findOne($receptionData['time'])['time'];
+        $receptionOperator = $receptionData['operator_id'];
+        $receptionUser = $arrayUser['last_name'].' '.$arrayUser['first_name'].' '.$arrayUser['middle_name'];
+        $receptionUserPhone = $arrayUser['phone'];
+        
+        $subject  = "Запись в дошкольный отдел Комитета по образованию";
+        $headers  = "From: " . strip_tags('info@roditeli.ulan-ude-eg.ru') . "\r\n";
+        $headers .= "Reply-To: ". strip_tags($sendto) . "\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html;charset=utf-8 \r\n";
+        
+        $msg  = "<html><body style='font-family:Arial,sans-serif;'>";
+        $msg .= "<h2 style='font-weight:bold;border-bottom:1px dotted #ccc;'>Запись в дошкольный отдел Комитета по образованию</h2>\r\n";
+        $msg .= "<p>Добрый день! ".$receptionDate." в ".$receptionTime." у Вас назначен приём в дошкольный отдел Комитета по образованию</p>\r\n";
+        $msg .= "<p><strong>Номер записи: </strong> ".$receptionNumber."</p>\r\n";
+        $msg .= "<p><strong>Дата: </strong> ".$receptionDate."</p>\r\n";
+        $msg .= "<p><strong>Время: </strong> ".$receptionTime."</p>\r\n";
+        $msg .= "<p><strong>Оператор: </strong> ".$receptionOperator."</p>\r\n";
+        $msg .= "<p><strong>Посетитель: </strong> ".$receptionUser."</p>\r\n";
+        $msg .= "<p><strong>Телефон: </strong> ".$receptionUserPhone."</p>\r\n";
+        $msg .= "<p>Данное письмо сгенгерировано автоматической системой, отвечать на него не нужно.</p>\r\n";
+        $msg .= "</body></html>";
+        
+        @mail($sendto, $subject, $msg, $headers);
+    }
+
     public function getNextDate() {
         $currentDate = date('Y-m-d');
         $busyDate = getBusyDate();
         foreach ($busyDate as $day) {
             if($day['date'] > $currentDate) {
-                
+
             }
         }
     }
+
+
 }

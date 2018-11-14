@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\ActiveField;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 
@@ -16,9 +17,21 @@ $this->params['breadcrumbs'][] = $this->title;
     	<h1><?= Html::encode($this->title) ?></h1>
 	
     	<?php $form = ActiveForm::begin(); ?>
-    	<div class="col-md-4">
-    		<?= $form->field($model, 'datePlan')->input('date'); ?>
-    	</div>
+    	
+        <div class="calendar-form col-md-6">
+            <label>Планируемая дата</label>
+            <?= DatePicker::widget([
+                'options' => ['placeholder' => 'Выберете необходимую дату'],
+                'name' => 'Reception[datePlan]',
+                'pluginOptions' => [
+                    'format' => 'yyyy-m-d',
+                    'startDate' => date("Y-m-d"),
+                    'todayHighlight' => true,
+                    'autoclose'=>true,
+                    'daysOfWeekDisabled' => [0, 1, 3, 5, 6],
+                ]
+            ]); ?>
+        </div>
 
     	<div class="col-md-4">
     		<?= $form->field($model, 'operatorPlan')->dropDownList([

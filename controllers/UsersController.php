@@ -88,6 +88,9 @@ class UsersController extends Controller
                 $idUser = $model->id;
             }
             Reception::addUser($id, $idUser);
+            if($arrayUser['email']) {
+                Reception::sendMail($id, $arrayUser);
+            }            
             //var_dump(Yii::$app->request->get('ReceptionSearch')['date']);
             return $this->redirect('/reception?ReceptionSearch[date]='.Yii::$app->request->get('ReceptionSearch')['date']);
         }

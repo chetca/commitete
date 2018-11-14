@@ -40,7 +40,7 @@ $gridColumns = [
     [
         'attribute' => 'timeReal',
         'value' => 'time.time',
-        'format' =>  ['time', 'hh:mm'],
+        'format' =>  ['time', 'HH:mm'],
         'headerOptions' => ['width' => '80'],
     ],
     [
