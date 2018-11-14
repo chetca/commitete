@@ -22,20 +22,6 @@ $gridColumns = [
         'attribute' => 'date',
         'format' =>  ['date', 'd.M.Y'],
         'headerOptions' => ['width' => '80'],
-        /*
-        //Доделать фильтрацию по датам
-        //https://github.com/2amigos/yii2-date-picker-widget
-        //https://klisl.com/DateTimePicker.html
-        'filter' => DatePicker::widget([
-            'model' => $searchModel,
-            'attribute' => 'created_at',
-            'language' => 'ru',
-            'clientOptions' => [
-                'autoclose' => true,
-                'format' => 'dd.mm.yyyy',
-            ],
-        ]),
-        */
     ],
     [
         'attribute' => 'timeReal',
@@ -63,23 +49,19 @@ $gridColumns = [
     ],
     [
         'attribute' => 'userNameReal',
+        'format' => 'raw',
         'value' => function ($model) {
             if(isset($model->user)) {
-                return $model->user->last_name;
+                return Html::a($model->user->last_name .' '. $model->user->first_name .' '. $model->user->middle_name,
+                    'users/view?id='.$model->user->id,
+                    [
+                        'title' => 'Смелей вперед!',
+                        'target' => '_blank'
+                    ]
+                );
             }
         },
     ],
-    /*
-    [
-        'attribute' => 'userPhone',
-        'value' => function ($model) {
-            if(isset($model->user)) {
-                return $model->user->phone;
-            }
-        },
-        'headerOptions' => ['width' => '150'],
-    ],
-    */
     [
         'attribute' => 'record',
         'format' =>  [

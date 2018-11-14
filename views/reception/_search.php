@@ -29,7 +29,7 @@ use kartik\date\DatePicker;
             'name' => 'ReceptionSearch[date]',
             'value' => Yii::$app->request->get('ReceptionSearch')['date'],
             'pluginOptions' => [
-                'format' => 'yyyy-m-d',
+                'format' => 'yyyy-mm-dd',
                 'startDate' => '2018-11-01',
                 'todayHighlight' => true,
                 'autoclose'=>true,

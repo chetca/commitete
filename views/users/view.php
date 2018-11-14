@@ -35,7 +35,80 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <h3>Запись:</h3>
-
+    <div    >
+        <?php
+            $dataProvider = new ActiveDataProvider([
+                'query' => $reception,
+            ]);
+            echo GridView::widget([
+                'dataProvider' => $dataProvider,
+                'layout'=>"{pager}\n{items}",
+                'columns' => [
+                    [
+                        'attribute' => 'id',
+                        'headerOptions' => ['width' => '80'],
+                    ],
+                    [
+                        'attribute' => 'date',
+                        'format' =>  ['date', 'd.M.Y'],
+                        'headerOptions' => ['width' => '80'],
+                    ],
+                    [
+                        'attribute' => 'timeReal',
+                        'value' => 'time.time',
+                        'format' =>  ['time', 'HH:mm'],
+                        'headerOptions' => ['width' => '80'],
+                    ],
+                    [
+                        'attribute'=>'operator_id',
+                        'format'=>'text', 
+                        'content'=>function($data) {
+                            return $data->getOperatorName();
+                        },
+                        'filter' => array("1"=>"Оператор 1","2"=>"Оператор 2", "3"=>"Оператор 3"),
+                        'headerOptions' => ['width' => '120'],
+                    ],
+                    [
+                        'attribute' => 'userNameReal',
+                        'header' => 'ФИО',
+                        'value' => function ($model) {
+                            if(isset($model->user)) {
+                                return $model->user->last_name .' '. $model->user->first_name .' '. $model->user->middle_name;
+                            }
+                        },
+                    ],
+                    [
+                        'attribute' => 'record',
+                        'format' =>  [
+                            'time', 'dd.MM.Y HH:mm'
+                        ],
+                        'value' => function($model) {
+                            Yii::$app->formatter->timeZone = 'Asia/Irkutsk';
+                            return $model->record;
+                        },
+                        'headerOptions' => ['width' => '150'],
+                    ],
+                
+                    ['class' => 'yii\grid\ActionColumn',
+                        'header' => 'Просмотр',
+                        'template' => '{view}',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                if($model->status_id == 2) {
+                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', 
+                                        '/reception/view?id='.$model->id,
+                                        [
+                                            'title' => Yii::t('yii', 'Просмотр'),
+                                        ]
+                                    );
+                                }
+                            },
+                        ],
+                    ]
+                ],
+            ]);
+        ?>
+    </div>
     
 
 </div>

@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => ['placeholder' => 'Выберете необходимую дату'],
                 'name' => 'Reception[datePlan]',
                 'pluginOptions' => [
-                    'format' => 'yyyy-m-d',
+                    'format' => 'yyyy-mm-dd',
                     'startDate' => date("Y-m-d"),
                     'todayHighlight' => true,
                     'autoclose'=>true,

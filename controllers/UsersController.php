@@ -12,6 +12,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use app\models\Reception;
 use app\models\Time;
+use yii\data\ActiveDataProvider;
 
 /**
  * UsersController implements the CRUD actions for Users model.
@@ -56,15 +57,9 @@ class UsersController extends Controller
      */
     public function actionView($id)
     {
-        $userData = Reception::find()->where(['user_id' => $id])->all();
-        //$userTime = Time::find()->where(['id' => $userData->id])->all();
-        //var_dump($userTime);
-
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            //'reception' => $userData,
-            //'time' => $userTime,
-        ]);
+        $reception = Reception::find()->where(['user_id' => $id]);
+        $model = $this->findModel($id);
+        return $this->render('view', compact('model', 'reception'));
 
     }
 
