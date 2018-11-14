@@ -2,13 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ReceptionSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="reception-search">
+<div class="reception-search form-group">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -29,6 +30,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton('Открыть', ['class' => 'btn btn-primary']) ?>
+        <a href="<?=Url::to(['index?ReceptionSearch[date]='])?>" class="btn btn-default">Все записи</a>
     </div>
 
     <?php ActiveForm::end(); ?>

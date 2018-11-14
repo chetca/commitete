@@ -95,11 +95,18 @@ $gridColumns = [
     ['class' => 'yii\grid\ActionColumn',
         'template' => '{view}  {link}  {delete}',
         'buttons' => [
+            'view' => function ($url, $model) {
+                if($model->status_id == 2) {
+                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url,[
+                        'title' => Yii::t('yii', 'Просмотр'),
+                    ]);
+                }
+            },
             'link' => function ($url,$model) {
                 if($model->status_id == 1) {
                     return Html::a(
                         '<span class="glyphicon glyphicon-pencil"></span>',
-                        '/users/create?id='.$model->id,
+                        '/users/create?id='.$model->id.'&ReceptionSearch[date]='.Yii::$app->request->get('ReceptionSearch')['date'],
                         [
                             'title' => Yii::t('yii', 'Создать запись'),
                         ]
@@ -108,19 +115,14 @@ $gridColumns = [
             },
             'delete' => function ($url, $model) {
                 if($model->status_id == 2) {
-                    return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url,[
-                        'title' => Yii::t('yii', 'Удалить'),
-                        'data-confirm' => 'Вы уверены что хотите удалить запись?',
-                        'data-method' => 'post',
-                        'data-pjax' => '0',
-                    ]);
-                }
-            },
-            'view' => function ($url, $model) {
-                if($model->status_id == 2) {
-                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url,[
-                        'title' => Yii::t('yii', 'Просмотр'),
-                    ]);
+                    return Html::a('<span class="glyphicon glyphicon-remove"></span>',
+                        '/reception/delete?id='.$model->id.'&ReceptionSearch[date]='.Yii::$app->request->get('ReceptionSearch')['date'],
+                        [
+                            'title' => Yii::t('yii', 'Удалить'),
+                            'data-confirm' => 'Вы уверены что хотите удалить запись?',
+                            'data-method' => 'post',
+                            'data-pjax' => '0',
+                        ]);
                 }
             },
         ],
@@ -136,6 +138,8 @@ $gridColumns = [
         <?= Html::a('Удалить записи', ['remove'], ['class' => 'btn btn-danger']) ?>
     </p>
 
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
     <?= ExportMenu::widget([
         'dataProvider' => $dataProvider,
         'columns' => $gridColumns,
@@ -144,8 +148,6 @@ $gridColumns = [
             'class' => 'btn btn-secondary'
         ]
     ]); ?>
-
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

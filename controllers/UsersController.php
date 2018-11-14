@@ -88,7 +88,8 @@ class UsersController extends Controller
                 $idUser = $model->id;
             }
             Reception::addUser($id, $idUser);
-            return $this->redirect('/reception');
+            //var_dump(Yii::$app->request->get('ReceptionSearch')['date']);
+            return $this->redirect('/reception?ReceptionSearch[date]='.Yii::$app->request->get('ReceptionSearch')['date']);
         }
         return $this->render('create', ['model' => $model]);
     }

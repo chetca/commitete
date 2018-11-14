@@ -35,42 +35,25 @@ class ReceptionController extends Controller
     /**
      * Lists all Reception models.
      * @return mixed
-     */
+     */    
     public function actionIndex()
     {
-        $searchModel = new ReceptionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        if(!Yii::$app->request->get()) {
-            return $this->redirect(['index', 'ReceptionSearch[date]' => '2018-11-13']);
-        }
-        //ReceptionSearch[date]=2018-11-13
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /*
-    public function actionIndex()
-    {
+        $currentDate = date('Y-m-d');
         $queryParams = Yii::$app->request->queryParams;
-        if (isset($queryParams['date'])) {
-            $queryParams['ReceptionSearch']['date'] = '2018-11-13';
+        if (!$queryParams) {
+            $queryParams['ReceptionSearch']['date'] = $currentDate;
         }
-        var_dump($queryParams);
+        //var_dump($queryParams);
 
         $searchModel = new ReceptionSearch();
         $dataProvider = $searchModel->search($queryParams);
         //ReceptionSearch[date]=2018-11-13
-        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-        
     }
-    */
+    
 
     /**
      * Displays a single Reception model.
@@ -134,7 +117,7 @@ class ReceptionController extends Controller
     {
         $model = new Reception();
         $model->deleteUser($id);
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'ReceptionSearch[date]' => Yii::$app->request->get('ReceptionSearch')['date']]);
     }
 
     /**
@@ -149,7 +132,7 @@ class ReceptionController extends Controller
             $operatorPlan = Yii::$app->request->post('Reception')['operatorPlan'];
             $datePlan = Yii::$app->request->post('Reception')['datePlan'];
             if($model->saveTime($operatorPlan, $datePlan, $countTime)) {
-                return $this->redirect(['index']);
+                return $this->redirect(['index', 'ReceptionSearch[date]' => $datePlan]);
             } else {
                 \Yii::$app->session->addFlash('danger', 'Ошибка ввода даты');
                 return $this->render('time', ['model' => $model]);
