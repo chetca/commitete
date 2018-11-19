@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 08 2018 г., 06:39
+-- Время создания: Ноя 19 2018 г., 09:40
 -- Версия сервера: 10.1.36-MariaDB
 -- Версия PHP: 7.2.11
 
@@ -154,7 +154,8 @@ CREATE TABLE `reception` (
   `status_id` int(11) NOT NULL,
   `operator_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `record` int(11) DEFAULT NULL
+  `record` int(11) DEFAULT NULL,
+  `created` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -232,8 +233,8 @@ CREATE TABLE `users` (
   `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `middle_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --

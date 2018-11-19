@@ -19,7 +19,7 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "lav45/yii2-behaviors": "^0.6.1",
-        "kartik-v/yii2-export": "@dev",
+        "kartik-v/yii2-export": "dev-master",
         "kartik-v/yii2-widget-datetimepicker": "^1.4",
         "kartik-v/yii2-widget-datepicker": "dev-master"
     },

@@ -60,7 +60,6 @@ class UsersController extends Controller
         $reception = Reception::find()->where(['user_id' => $id]);
         $model = $this->findModel($id);
         return $this->render('view', compact('model', 'reception'));
-
     }
 
     /**
@@ -73,6 +72,7 @@ class UsersController extends Controller
         $model = new Users();
         $request = Yii::$app->request;
         $id = $request->get('id');
+        $receptionData = $model->getReceptionData($id);
         $arrayUser = $request->post('Users');
         if ($model->load(Yii::$app->request->post()) && isset($id)) {
             $checkUser = $model->checkUser($arrayUser);
@@ -86,10 +86,9 @@ class UsersController extends Controller
             if($arrayUser['email']) {
                 Reception::sendMail($id, $arrayUser);
             }            
-            //var_dump(Yii::$app->request->get('ReceptionSearch')['date']);
-            return $this->redirect('/reception?ReceptionSearch[date]='.Yii::$app->request->get('ReceptionSearch')['date']);
+            return $this->redirect('/reception/view?id='.$id);
         }
-        return $this->render('create', ['model' => $model]);
+        return $this->render('create', ['model' => $model, 'receptionData' => $receptionData]);
     }
 
     /**

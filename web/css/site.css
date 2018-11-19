@@ -123,3 +123,8 @@ a.desc:after {
     width:320px;
     margin-bottom: 10px;
 }
+@media print {
+    nav, ul.breadcrumb, button.btn, footer { 
+        display: none; 
+    }
+}

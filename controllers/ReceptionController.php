@@ -43,11 +43,9 @@ class ReceptionController extends Controller
         if (!$queryParams) {
             $queryParams['ReceptionSearch']['date'] = $currentDate;
         }
-        //var_dump($queryParams);
 
         $searchModel = new ReceptionSearch();
         $dataProvider = $searchModel->search($queryParams);
-        //ReceptionSearch[date]=2018-11-13
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bfd60a262715fc138d58d9abb552a2de",
+    "content-hash": "9b8428a535435067fb696a4453ab918e",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -55,7 +55,7 @@
             "version": "3.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "77d2a51d0520d2ee44173afdf4e40a9201f5964e"
             },
             "dist": {
@@ -331,12 +331,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-export.git",
-                "reference": "e4a1e46606a378ea3357184be9d40f33bc7ac39a"
+                "reference": "35b6766cd1dfe3d1b661e36b8f6bab783233c1d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-export/zipball/e4a1e46606a378ea3357184be9d40f33bc7ac39a",
-                "reference": "e4a1e46606a378ea3357184be9d40f33bc7ac39a",
+                "url": "https://api.github.com/repos/kartik-v/yii2-export/zipball/35b6766cd1dfe3d1b661e36b8f6bab783233c1d9",
+                "reference": "35b6766cd1dfe3d1b661e36b8f6bab783233c1d9",
                 "shasum": ""
             },
             "require": {
@@ -383,7 +383,7 @@
                 "xlsx",
                 "yii2"
             ],
-            "time": "2018-11-07T17:39:43+00:00"
+            "time": "2018-11-15T15:18:34+00:00"
         },
         {
             "name": "kartik-v/yii2-grid",

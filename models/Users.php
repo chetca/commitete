@@ -64,4 +64,14 @@ class Users extends \yii\db\ActiveRecord
             return false;
         }
     }
+
+    public function getReceptionData($id) {
+        $reception = Reception::findOne($id);
+        $time = Time::findOne($reception->time_id);
+        $receptionData = array(
+            'date' => $reception->date,
+            'time' => $time->time,
+        );
+        return $receptionData;
+    }
 }

@@ -25,7 +25,7 @@ class ReceptionSearch extends Reception
     {
         return [
             [['id', 'time_id', 'status_id', 'operator_id', 'user_id'], 'integer'],
-            [['date', 'record', 'timeReal', 'userNameReal', 'userPhone', 'userEmail'], 'safe'],
+            [['date', 'record', 'created', 'timeReal', 'userNameReal', 'userPhone', 'userEmail'], 'safe'],
         ];
     }
 
@@ -96,6 +96,8 @@ class ReceptionSearch extends Reception
             'status_id' => $this->status_id,
             'operator_id' => $this->operator_id,
             'user_id' => $this->user_id,
+            'record' => $this->record,
+            'created' => $this->created,
         ])
         ->andFilterWhere(['like', 
             Time::tableName().'.time', 

@@ -38,7 +38,7 @@ class Reception extends \yii\db\ActiveRecord
         return [
             [['time_id', 'date', 'status_id', 'operator_id', 'user_id'], 'required'],
             [['time_id', 'status_id', 'operator_id', 'user_id', 'operatorPlan'], 'integer'],
-            [['date', 'record', 'userNameReal'], 'safe'],
+            [['date', 'record', 'userNameReal', 'created'], 'safe'],
         ];
     }
 
@@ -54,13 +54,14 @@ class Reception extends \yii\db\ActiveRecord
             'status_id' => 'Статус',
             'operator_id' => 'Оператор',
             'user_id' => 'Посетитель',
-            'record' => 'Время обращения',
+            'record' => 'Дата записи',
             'datePlan' => 'Планируемая дата',
             'operatorPlan' => 'Количество операторов',
             'timeReal' => 'Время',
-            'userNameReal' => 'Фамилия',
+            'userNameReal' => 'ФИО',
             'userPhone' => 'Телефон',
             'userEmail' => 'Электронная почта',
+            'created' => 'Дата создания записи',
         ];
     }
 
@@ -119,15 +120,16 @@ class Reception extends \yii\db\ActiveRecord
         if($dataPlan <= $currentDate) {
             return false;
         }
+        $now = strtotime(date("d.m.Y H:i:s", time()));
         $data = array();
         for($i = 1; $i <= $operatorPlan; $i++) {
             for($j = 1; $j <= $countTime; $j++) {
-                array_push($data, [$j, $dataPlan, 1, $i, 0]);
+                array_push($data, [$j, $dataPlan, 1, $i, 0, $now]);
             }
         }
         Yii::$app->db
         ->createCommand()
-        ->batchInsert('reception', ['time_id', 'date', 'status_id', 'operator_id', 'user_id'], $data)
+        ->batchInsert('reception', ['time_id', 'date', 'status_id', 'operator_id', 'user_id', 'created'], $data)
         ->execute();
         return true;
     }

@@ -12,7 +12,7 @@ $this->title = 'Список записей';
 $this->params['breadcrumbs'][] = $this->title;
 
 $gridColumns = [
-    //['class' => 'yii\grid\SerialColumn'],
+    ['class' => 'kartik\grid\SerialColumn'],
     
     [
         'attribute' => 'id',
@@ -53,9 +53,9 @@ $gridColumns = [
         'value' => function ($model) {
             if(isset($model->user)) {
                 return Html::a($model->user->last_name .' '. $model->user->first_name .' '. $model->user->middle_name,
-                    'users/view?id='.$model->user->id,
+                    '/users/view?id='.$model->user->id,
                     [
-                        'title' => 'Смелей вперед!',
+                        'title' => 'Подробнее',
                         'target' => '_blank'
                     ]
                 );
@@ -73,8 +73,20 @@ $gridColumns = [
         },
         'headerOptions' => ['width' => '150'],
     ],
+    [
+        'attribute' => 'created',
+        'format' =>  [
+            'time', 'dd.MM.Y HH:mm'
+        ],
+        'value' => function($model) {
+            Yii::$app->formatter->timeZone = 'Asia/Irkutsk';
+            return $model->created;
+        },
+        'headerOptions' => ['width' => '150'],
+        'visible' => false,
+    ],
 
-    ['class' => 'yii\grid\ActionColumn',
+    ['class' => 'kartik\grid\ActionColumn',
         'template' => '{view}  {link}  {delete}',
         'buttons' => [
             'view' => function ($url, $model) {
@@ -125,15 +137,25 @@ $gridColumns = [
     <?= ExportMenu::widget([
         'dataProvider' => $dataProvider,
         'columns' => $gridColumns,
+        'pjax' => true,
+        'columnSelectorOptions'=>[
+            'visible' => false,
+        ],
         'dropdownOptions' => [
             'label' => 'Выгрузка в файл',
             'class' => 'btn btn-secondary'
-        ]
+        ],
+        'exportConfig' => [
+            ExportMenu::FORMAT_HTML => false,
+            ExportMenu::FORMAT_TEXT => false,
+        ],
     ]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'columns' => $gridColumns,
+        'pjax' => true,
         'tableOptions' => [
             'class' => 'table table-striped table-bordered'
         ],
@@ -143,7 +165,6 @@ $gridColumns = [
             } else {
                 return ['class' => 'danger'];
             }
-        },
-        'columns' => $gridColumns,
+        },        
     ]); ?>
 </div>
