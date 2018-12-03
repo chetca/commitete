@@ -40,10 +40,14 @@ class ReceptionController extends Controller
     {
         $currentDate = date('Y-m-d');
         $queryParams = Yii::$app->request->queryParams;
+        /*
         if (!$queryParams) {
             $queryParams['ReceptionSearch']['date'] = $currentDate;
         }
-
+        */
+        if (!Yii::$app->request->get()) {
+            return $this->redirect(['index', 'ReceptionSearch[date]' => $currentDate]);
+        }
         $searchModel = new ReceptionSearch();
         $dataProvider = $searchModel->search($queryParams);
         return $this->render('index', [
@@ -132,7 +136,7 @@ class ReceptionController extends Controller
             if($model->saveTime($operatorPlan, $datePlan, $countTime)) {
                 return $this->redirect(['index', 'ReceptionSearch[date]' => $datePlan]);
             } else {
-                \Yii::$app->session->addFlash('danger', 'Ошибка ввода даты');
+                \Yii::$app->session->addFlash('danger', 'Ошибка! Данный день уже запланирован');
                 return $this->render('time', ['model' => $model]);
             }
         } else {

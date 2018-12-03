@@ -13,6 +13,7 @@ use app\models\Users;
  */
 class ReceptionSearch extends Reception
 {
+    public $reception_id;
     public $timeReal;
     public $userNameReal;
     public $userPhone;
@@ -24,7 +25,7 @@ class ReceptionSearch extends Reception
     public function rules()
     {
         return [
-            [['id', 'time_id', 'status_id', 'operator_id', 'user_id'], 'integer'],
+            [['id', 'reception_id', 'time_id', 'status_id', 'operator_id', 'user_id'], 'integer'],
             [['date', 'record', 'created', 'timeReal', 'userNameReal', 'userPhone', 'userEmail'], 'safe'],
         ];
     }
@@ -60,6 +61,11 @@ class ReceptionSearch extends Reception
             ],
         ]);
 
+        $dataProvider->sort->attributes['reception_id'] = [
+            'asc' => [Reception::tableName().'.id' => SORT_ASC],
+            'desc' => [Reception::tableName().'.id' => SORT_DESC],
+        ];
+
         $dataProvider->sort->attributes['userPhone'] = [
             'asc' => [Users::tableName().'.phone' => SORT_ASC],
             'desc' => [Users::tableName().'.phone' => SORT_DESC],
@@ -90,7 +96,6 @@ class ReceptionSearch extends Reception
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
             'time_id' => $this->time_id,
             'date' => $this->date,
             'status_id' => $this->status_id,
@@ -98,6 +103,10 @@ class ReceptionSearch extends Reception
             'user_id' => $this->user_id,
             'record' => $this->record,
             'created' => $this->created,
+        ])
+        ->andFilterWhere(['like', 
+            Reception::tableName().'.id', 
+            $this->reception_id,
         ])
         ->andFilterWhere(['like', 
             Time::tableName().'.time', 

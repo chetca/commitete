@@ -18,6 +18,7 @@ use Yii;
  */
 class Reception extends \yii\db\ActiveRecord
 {
+    public $reception_id;
     public $datePlan;
     public $operatorPlan;
     public $userNameReal;
@@ -37,7 +38,7 @@ class Reception extends \yii\db\ActiveRecord
     {
         return [
             [['time_id', 'date', 'status_id', 'operator_id', 'user_id'], 'required'],
-            [['time_id', 'status_id', 'operator_id', 'user_id', 'operatorPlan'], 'integer'],
+            [['reception_id', 'time_id', 'status_id', 'operator_id', 'user_id', 'operatorPlan'], 'integer'],
             [['date', 'record', 'userNameReal', 'created'], 'safe'],
         ];
     }
@@ -48,7 +49,7 @@ class Reception extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'Номер записи',
+            'reception_id' => 'Номер записи',
             'time_id' => 'Время',
             'date' => 'Дата',
             'status_id' => 'Статус',

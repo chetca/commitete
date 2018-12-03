@@ -124,7 +124,7 @@ a.desc:after {
     margin-bottom: 10px;
 }
 @media print {
-    nav, ul.breadcrumb, button.btn, footer { 
+    nav, ul.breadcrumb, a.btn, button.btn, footer { 
         display: none; 
     }
 }

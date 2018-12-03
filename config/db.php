@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=commitete_db',
-    'username' => 'root',
-    'password' => '',
+    'dsn' => 'mysql:host=127.0.0.1;dbname=commitete_db',
+    'username' => 'reseption',
+    'password' => 'Cp~ajqu{',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)

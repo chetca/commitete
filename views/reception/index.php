@@ -15,7 +15,8 @@ $gridColumns = [
     ['class' => 'kartik\grid\SerialColumn'],
     
     [
-        'attribute' => 'id',
+        'attribute' => 'reception_id',
+        'value' => 'id',
         'headerOptions' => ['width' => '80'],
     ],
     [

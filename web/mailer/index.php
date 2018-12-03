@@ -11,7 +11,7 @@ $users = new Users();
 $reception = new Reception();
 $time = new Time();
 $date = date("Y-m-d", strtotime("tomorrow"));
-//$date = "2018-11-14";
+//$date = "2018-11-27";
 $data_reception = $reception->selectReceptionUser($date);
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

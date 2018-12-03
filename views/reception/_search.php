@@ -12,10 +12,13 @@ use kartik\date\DatePicker;
 
 <div class="reception-search form-group">
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
+    <?php 
+        $form = ActiveForm::begin([
+            'action' => ['index'],
+            'method' => 'get',
+        ]);
+        $value = Yii::$app->request->get('ReceptionSearch')['date'] ? Yii::$app->request->get('ReceptionSearch')['date'] : date('Y-m-d');
+    ?>
 
     <?php //echo $form->field($model, 'id') ?>
 
@@ -32,7 +35,7 @@ use kartik\date\DatePicker;
                 'format' => 'yyyy-mm-dd',
                 'startDate' => '2018-11-01',
                 'todayHighlight' => true,
-                'autoclose'=>true,
+                'autoclose' => true,
                 'daysOfWeekDisabled' => [0, 1, 3, 5, 6],
             ]
         ]); ?>
