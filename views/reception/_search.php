@@ -32,7 +32,7 @@ use kartik\date\DatePicker;
             'name' => 'ReceptionSearch[date]',
             'value' => Yii::$app->request->get('ReceptionSearch')['date'],
             'pluginOptions' => [
-                'format' => 'yyyy-mm-dd',
+                'format' => 'dd-mm-yyyy',
                 'startDate' => '2018-11-01',
                 'todayHighlight' => true,
                 'autoclose' => true,
@@ -47,9 +47,9 @@ use kartik\date\DatePicker;
 
     <?php //echo $form->field($model, 'userNameReal') ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Открыть', ['class' => 'btn btn-primary']) ?>
-        <a href="<?=Url::to(['index?ReceptionSearch[date]='])?>" class="btn btn-default">Все записи</a>
+    <div class="form-group" style="display: flex;">
+        <?= Html::submitButton('Открыть', ['class' => 'btn btn-primary', 'style' => 'margin-right: 10px;']) ?>
+        <?= Html::a('Все записи', ['index?ReceptionSearch[date]='], ['class'=>'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

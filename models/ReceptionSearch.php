@@ -77,8 +77,18 @@ class ReceptionSearch extends Reception
         ];
 
         $dataProvider->sort->attributes['userNameReal'] = [
-            'asc' => [Users::tableName().'.last_name' => SORT_ASC],
-            'desc' => [Users::tableName().'.last_name' => SORT_DESC],
+            'asc' => 
+                [
+                    Users::tableName().'.last_name' => SORT_ASC,
+                    Users::tableName().'.first_name' => SORT_ASC,
+                    Users::tableName().'.middle_name' => SORT_ASC
+                ],
+            'desc' => 
+                [
+                    Users::tableName().'.last_name' => SORT_DESC,
+                    Users::tableName().'.first_name' => SORT_DESC,
+                    Users::tableName().'.middle_name' => SORT_DESC
+                ],
         ];
 
         $dataProvider->sort->attributes['timeReal'] = [
@@ -97,7 +107,7 @@ class ReceptionSearch extends Reception
         // grid filtering conditions
         $query->andFilterWhere([
             'time_id' => $this->time_id,
-            'date' => $this->date,
+            'date' => date("Y-m-d", strtotime($this->date)),
             'status_id' => $this->status_id,
             'operator_id' => $this->operator_id,
             'user_id' => $this->user_id,
@@ -112,9 +122,11 @@ class ReceptionSearch extends Reception
             Time::tableName().'.time', 
             $this->timeReal,
         ])
-        ->andFilterWhere(['like', 
-            Users::tableName().'.last_name', 
-            $this->userNameReal,
+        ->andFilterWhere([
+            'or', 
+            ['like', Users::tableName().'.last_name', $this->userNameReal],
+            ['like', Users::tableName().'.first_name', $this->userNameReal],
+            ['like', Users::tableName().'.middle_name', $this->userNameReal],
         ])
         ->andFilterWhere(['like', 
             Users::tableName().'.phone', 

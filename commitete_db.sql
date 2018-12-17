@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 19 2018 г., 09:40
+-- Время создания: Дек 17 2018 г., 04:29
 -- Версия сервера: 10.1.36-MariaDB
 -- Версия PHP: 7.2.11
 
@@ -25,85 +25,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `auth_assignment`
---
-
-CREATE TABLE `auth_assignment` (
-  `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Дамп данных таблицы `auth_assignment`
---
-
-INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('admin', '1', 1540973743),
-('moderator', '2', 1540973743);
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `auth_item`
---
-
-CREATE TABLE `auth_item` (
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `type` smallint(6) NOT NULL,
-  `description` text COLLATE utf8_unicode_ci,
-  `rule_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `data` blob,
-  `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Дамп данных таблицы `auth_item`
---
-
-INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-('admin', 1, NULL, NULL, NULL, 1540973743, 1540973743),
-('createPost', 2, 'Create a post', NULL, NULL, 1540973743, 1540973743),
-('moderator', 1, NULL, NULL, NULL, 1540973743, 1540973743),
-('updatePost', 2, 'Update post', NULL, NULL, 1540973743, 1540973743);
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `auth_item_child`
---
-
-CREATE TABLE `auth_item_child` (
-  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Дамп данных таблицы `auth_item_child`
---
-
-INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-('admin', 'moderator'),
-('admin', 'updatePost'),
-('moderator', 'createPost');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `auth_rule`
---
-
-CREATE TABLE `auth_rule` (
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `data` blob,
-  `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Структура таблицы `migration`
 --
 
@@ -119,7 +40,8 @@ CREATE TABLE `migration` (
 INSERT INTO `migration` (`version`, `apply_time`) VALUES
 ('m000000_000000_base', 1540971313),
 ('m140506_102106_rbac_init', 1540971319),
-('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1540971319);
+('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1540971319),
+('m181203_072110_create_user_table', 1543821728);
 
 -- --------------------------------------------------------
 
@@ -157,6 +79,180 @@ CREATE TABLE `reception` (
   `record` int(11) DEFAULT NULL,
   `created` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп данных таблицы `reception`
+--
+
+INSERT INTO `reception` (`id`, `time_id`, `date`, `status_id`, `operator_id`, `user_id`, `record`, `created`) VALUES
+(1, 1, '2018-11-22', 2, 1, 4, 1543829007, 1542674494),
+(2, 2, '2018-11-22', 2, 1, 1, 1542700590, 1542674494),
+(3, 3, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(4, 4, '2018-11-22', 2, 1, 2, 1542700617, 1542674494),
+(5, 5, '2018-11-22', 2, 1, 3, 1542700636, 1542674494),
+(6, 6, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(7, 7, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(8, 8, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(9, 9, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(10, 10, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(11, 11, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(12, 12, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(13, 13, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(14, 14, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(15, 15, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(16, 16, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(17, 17, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(18, 18, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(19, 19, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(20, 20, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(21, 21, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(22, 22, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(23, 23, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(24, 24, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(25, 25, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(26, 26, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(27, 27, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(28, 28, '2018-11-22', 1, 1, 0, NULL, 1542674494),
+(29, 1, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(30, 2, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(31, 3, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(32, 4, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(33, 5, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(34, 6, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(35, 7, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(36, 8, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(37, 9, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(38, 10, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(39, 11, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(40, 12, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(41, 13, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(42, 14, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(43, 15, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(44, 16, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(45, 17, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(46, 18, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(47, 19, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(48, 20, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(49, 21, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(50, 22, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(51, 23, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(52, 24, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(53, 25, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(54, 26, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(55, 27, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(56, 28, '2018-11-22', 1, 2, 0, NULL, 1542674494),
+(57, 1, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(58, 2, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(59, 3, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(60, 4, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(61, 5, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(62, 6, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(63, 7, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(64, 8, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(65, 9, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(66, 10, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(67, 11, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(68, 12, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(69, 13, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(70, 14, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(71, 15, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(72, 16, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(73, 17, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(74, 18, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(75, 19, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(76, 20, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(77, 21, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(78, 22, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(79, 23, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(80, 24, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(81, 25, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(82, 26, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(83, 27, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(84, 28, '2018-11-27', 1, 1, 0, NULL, 1542674503),
+(85, 1, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(86, 2, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(87, 3, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(88, 4, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(89, 5, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(90, 6, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(91, 7, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(92, 8, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(93, 9, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(94, 10, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(95, 11, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(96, 12, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(97, 13, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(98, 14, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(99, 15, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(100, 16, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(101, 17, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(102, 18, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(103, 19, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(104, 20, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(105, 21, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(106, 22, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(107, 23, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(108, 24, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(109, 25, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(110, 26, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(111, 27, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(112, 28, '2018-11-27', 1, 2, 0, NULL, 1542674503),
+(113, 1, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(114, 2, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(115, 3, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(116, 4, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(117, 5, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(118, 6, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(119, 7, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(120, 8, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(121, 9, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(122, 10, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(123, 11, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(124, 12, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(125, 13, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(126, 14, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(127, 15, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(128, 16, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(129, 17, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(130, 18, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(131, 19, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(132, 20, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(133, 21, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(134, 22, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(135, 23, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(136, 24, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(137, 25, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(138, 26, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(139, 27, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(140, 28, '2019-01-10', 1, 1, 0, NULL, 1545014592),
+(141, 1, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(142, 2, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(143, 3, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(144, 4, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(145, 5, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(146, 6, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(147, 7, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(148, 8, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(149, 9, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(150, 10, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(151, 11, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(152, 12, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(153, 13, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(154, 14, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(155, 15, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(156, 16, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(157, 17, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(158, 18, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(159, 19, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(160, 20, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(161, 21, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(162, 22, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(163, 23, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(164, 24, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(165, 25, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(166, 26, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(167, 27, '2019-01-10', 1, 2, 0, NULL, 1545014592),
+(168, 28, '2019-01-10', 1, 2, 0, NULL, 1545014592);
 
 -- --------------------------------------------------------
 
@@ -225,6 +321,31 @@ INSERT INTO `time` (`id`, `time`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `auth_key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password_reset_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '10',
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп данных таблицы `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'admin', 'QLe8TrzWIAFA3Kliux2WeWf46OakmlsN', '$2y$13$iYRGlu0ApMxsljU5YHsF5.Hpr/Ml4XQzxPPeVkMHYZP7RuXoNKSCy', NULL, 'chetca@yandex.ru', 10, 1543824418, 1543824418);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `users`
 --
 
@@ -238,36 +359,18 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `phone`, `email`) VALUES
+(1, 'Тест', 'Тест', 'Тест', '+7 (000) 000 00 00', 'mailto@mail.com'),
+(2, 'tdfghdfsh', 'dfhfh', 'цукцукцу', '+7 (555) 555 55 55', '87676@ya.ru'),
+(3, 'Пётр', 'Юрьевич', 'Самсонов', '+7 (324) 534 53 45', '234234'),
+(4, 'Тест', 'Тест', 'Тест', '', '');
+
+--
 -- Индексы сохранённых таблиц
 --
-
---
--- Индексы таблицы `auth_assignment`
---
-ALTER TABLE `auth_assignment`
-  ADD PRIMARY KEY (`item_name`,`user_id`),
-  ADD KEY `auth_assignment_user_id_idx` (`user_id`);
-
---
--- Индексы таблицы `auth_item`
---
-ALTER TABLE `auth_item`
-  ADD PRIMARY KEY (`name`),
-  ADD KEY `rule_name` (`rule_name`),
-  ADD KEY `idx-auth_item-type` (`type`);
-
---
--- Индексы таблицы `auth_item_child`
---
-ALTER TABLE `auth_item_child`
-  ADD PRIMARY KEY (`parent`,`child`),
-  ADD KEY `child` (`child`);
-
---
--- Индексы таблицы `auth_rule`
---
-ALTER TABLE `auth_rule`
-  ADD PRIMARY KEY (`name`);
 
 --
 -- Индексы таблицы `migration`
@@ -300,6 +403,15 @@ ALTER TABLE `time`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `password_reset_token` (`password_reset_token`);
+
+--
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
@@ -319,7 +431,7 @@ ALTER TABLE `operators`
 -- AUTO_INCREMENT для таблицы `reception`
 --
 ALTER TABLE `reception`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 
 --
 -- AUTO_INCREMENT для таблицы `status`
@@ -334,33 +446,16 @@ ALTER TABLE `time`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
+-- AUTO_INCREMENT для таблицы `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Ограничения внешнего ключа сохраненных таблиц
---
-
---
--- Ограничения внешнего ключа таблицы `auth_assignment`
---
-ALTER TABLE `auth_assignment`
-  ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `auth_item`
---
-ALTER TABLE `auth_item`
-  ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `auth_item_child`
---
-ALTER TABLE `auth_item_child`
-  ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

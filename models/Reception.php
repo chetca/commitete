@@ -108,11 +108,7 @@ class Reception extends \yii\db\ActiveRecord
     public function saveTime($operatorPlan, $dataPlan, $countTime)
     {
         $currentDate = date('Y-m-d');
-        $busyDate = (new \yii\db\Query())
-            ->select('date')
-            ->from('reception')
-            ->distinct()
-            ->all();
+        $busyDate = Reception::getBusyDate();
         foreach ($busyDate as $key) {
             if($key['date'] == $dataPlan) {
                 return false;
@@ -149,6 +145,9 @@ class Reception extends \yii\db\ActiveRecord
     {
         $now = strtotime(date("d.m.Y H:i:s", time()));
         $nowReception = Reception::findOne($receptionId);
+        if($nowReception->status_id == 2) {
+            return false;
+        }
         Reception::updateAll([
             'status_id' => 2, 
             'user_id' => $userId, 
@@ -181,39 +180,43 @@ class Reception extends \yii\db\ActiveRecord
         $receptionDate = date("d.m.Y", strtotime($receptionData['date']));
         $receptionTime = Time::findOne($receptionData['time'])['time'];
         $receptionOperator = $receptionData['operator_id'];
-        $receptionUser = $arrayUser['last_name'].' '.$arrayUser['first_name'].' '.$arrayUser['middle_name'];
+        $receptionUser = $arrayUser['last_name'].' '.$arrayUser['first_name'];
+        if($arrayUser['middle_name']) {
+            $receptionUser.=' '.$arrayUser['middle_name'];
+        }
         $receptionUserPhone = $arrayUser['phone'];
         
         $subject  = "Запись в дошкольный отдел Комитета по образованию";
-        $headers  = "From: " . strip_tags('info@roditeli.ulan-ude-eg.ru') . "\r\n";
+        $headers  = "From: " . strip_tags('sendmail@ulan-ude-eg.ru') . "\r\n";
         $headers .= "Reply-To: ". strip_tags($sendto) . "\r\n";
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html;charset=utf-8 \r\n";
         
         $msg  = "<html><body style='font-family:Arial,sans-serif;'>";
-        $msg .= "<h2 style='font-weight:bold;border-bottom:1px dotted #ccc;'>Запись в дошкольный отдел Комитета по образованию</h2>\r\n";
-        $msg .= "<p>Добрый день! ".$receptionDate." в ".$receptionTime." у Вас назначен приём в дошкольный отдел Комитета по образованию</p>\r\n";
-        $msg .= "<p><strong>Номер записи: </strong> ".$receptionNumber."</p>\r\n";
-        $msg .= "<p><strong>Дата: </strong> ".$receptionDate."</p>\r\n";
-        $msg .= "<p><strong>Время: </strong> ".$receptionTime."</p>\r\n";
-        $msg .= "<p><strong>Оператор: </strong> ".$receptionOperator."</p>\r\n";
-        $msg .= "<p><strong>Посетитель: </strong> ".$receptionUser."</p>\r\n";
-        $msg .= "<p><strong>Телефон: </strong> ".$receptionUserPhone."</p>\r\n";
-        $msg .= "<p>Данное письмо сгенгерировано автоматической системой, отвечать на него не нужно.</p>\r\n";
+        $msg .= "<p style='border-bottom:1px dotted #ccc;'>ЗАПИСЬ В ДОШКОЛЬНЫЙ ОТДЕЛ КОМИТЕТА ПО ОБРАЗОВАНИЮ</p>\r\n";
+        $msg .= "<p>Уважаемый ".$receptionUser.", ".$receptionDate." в ".$receptionTime." Вы записаны на приём в дошкольный отдел Комитета по образованию:</p>\r\n";
+        $msg .= "<p>Номер записи: ".$receptionNumber."</p>\r\n";
+        $msg .= "<p>Дата: ".$receptionDate."</p>\r\n";
+        $msg .= "<p>Время: ".$receptionTime."</p>\r\n";
+        $msg .= "<p>На приём при себе иметь следующие документы:</p>\r\n";
+		$msg .= "<p>- свидетельство о рождении;</p>\r\n";
+		$msg .= "<p>- паспорт родителя (законного представителя) ребёнка;</p>\r\n";
+		$msg .= "<p>- свидетельство о регистрации ребёнка по месту жительства в г. Улан-Удэ;</p>\r\n";
+		$msg .= "<p>- документ, подтверждающий льготную категорию (при наличии).</p><br>\r\n";
+        $msg .= "<p>Данное письмо сгенерировано автоматически, отвечать на него не нужно.</p>\r\n";
         $msg .= "</body></html>";
         
-        @mail($sendto, $subject, $msg, $headers);
+        mail($sendto, $subject, $msg, $headers);
     }
 
     public function getNextDate() {
         $currentDate = date('Y-m-d');
-        $busyDate = getBusyDate();
+        $busyDate = Reception::getBusyDate();
         foreach ($busyDate as $day) {
             if($day['date'] > $currentDate) {
-
+                return $day['date'];
             }
         }
+        return $currentDate;
     }
-
-
 }

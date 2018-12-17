@@ -17,12 +17,12 @@ $gridColumns = [
     [
         'attribute' => 'reception_id',
         'value' => 'id',
-        'headerOptions' => ['width' => '80'],
+        'headerOptions' => ['width' => '50'],
     ],
     [
         'attribute' => 'date',
         'format' =>  ['date', 'd.M.Y'],
-        'headerOptions' => ['width' => '80'],
+        'headerOptions' => ['width' => '120'],
     ],
     [
         'attribute' => 'timeReal',
@@ -37,7 +37,7 @@ $gridColumns = [
             return $data->getStatusName();
         },
         'filter' => array("1"=>"Время свободно","2"=>"Время занято"),
-        'headerOptions' => ['width' => '150'],
+        'headerOptions' => ['width' => '140'],
     ],
     [
         'attribute'=>'operator_id',
@@ -126,12 +126,7 @@ $gridColumns = [
 
 <div class="reception-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Добавить записи', ['time'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Удалить записи', ['remove'], ['class' => 'btn btn-danger']) ?>
-    </p>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 

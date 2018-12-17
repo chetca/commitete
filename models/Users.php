@@ -32,6 +32,7 @@ class Users extends \yii\db\ActiveRecord
         return [
             [['first_name', 'last_name'], 'required'],
             [['first_name', 'middle_name', 'last_name', 'phone', 'email'], 'string', 'max' => 255],
+            ['email', 'email'],
         ];
     }
 
@@ -57,6 +58,7 @@ class Users extends \yii\db\ActiveRecord
             'middle_name' => $arrayUser['middle_name'],
             'last_name' => $arrayUser['last_name'],
             'phone' => $arrayUser['phone'],
+            'email' => $arrayUser['email'],
         ]);
         if($find) {
             return $find->id;

@@ -7,8 +7,9 @@ use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Планирование времени';
+$this->title = 'Планирование даты';
 $this->params['breadcrumbs'][] = ['label' => 'Список записей', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Управление датами', 'url' => ['/reception/management']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reception-time">
@@ -24,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => ['placeholder' => 'Выберете необходимую дату'],
                 'name' => 'Reception[datePlan]',
                 'pluginOptions' => [
-                    'format' => 'yyyy-mm-dd',
+                    'format' => 'dd-mm-yyyy',
                     'startDate' => date("Y-m-d"),
                     'todayHighlight' => true,
                     'autoclose'=>true,
@@ -54,4 +55,3 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php ActiveForm::end(); ?>
 
 </div>
-
